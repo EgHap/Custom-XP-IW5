@@ -21,16 +21,25 @@ OnPlayerConnecting()
     for (;;)
     {
         level waittill("connected", player);
-		playerfile = "scripts\\EgHap\\" + player.guid + ".txt";
-		if(!fileExists(playerfile))
+		player.isBot = 0;
+		
+		if(isSubStr(player.guid, "bot"))
 		{
-			writeFile(playerfile, "0");
-			fclose(1);
+			player.isBot = 1;
 		}
-		file = fopen(playerfile, "r");
-		player.pers["xp"] = fread(file);
-		print(fread(file));
-		fclose(file);	
+		else
+		{
+			playerfile = "scripts\\EgHap\\" + player.guid + ".txt";
+			if(!fileExists(playerfile))
+			{
+				writeFile(playerfile, "0");
+				fclose(1);
+			}
+			file = fopen(playerfile, "r");
+			player.pers["xp"] = fread(file);
+			print(fread(file));
+			fclose(file);	
+		}
 	}
 }
 
@@ -45,11 +54,15 @@ OnPlayerConnected()
 
 customgetPrestigeLevel()
 {
-	return 0;
+	if(self.isBot != 1)
+		return 0;
+	return 20;
 }
 customgetRankXP()
 {		
-	return int(self.pers["xp"]);
+	if(self.isBot != 1)
+		return int(self.pers["xp"]);
+	return 80000;
 }
 
 giveXP(amount) 
@@ -67,5 +80,16 @@ giveXP(amount)
 customgiveRankXP(type, value, weapon, sMeansOfDeath, challengeName) 
 {
     self endon("disconnect");
-    self giveXP(50);
+	if(self.isBot != 1)
+	{
+		self giveXP(50);
+		self customgetRankXP();
+	
+		playerfile = "scripts\\EgHap\\" + self.guid + ".txt";
+
+		file = fopen(playerfile, "r");
+		self.pers["xp"] = fread(file);
+		print(fread(file));
+		fclose(file);	
+	}
 }
