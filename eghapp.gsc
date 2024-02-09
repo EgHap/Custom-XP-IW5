@@ -1,7 +1,4 @@
-#include common_scripts\utility;
-#include maps\mp\_utility;
 #include maps\mp\gametypes\_rank;
-#include maps\mp\gametypes\_hud_util;
 
 init()
 {
@@ -43,7 +40,6 @@ OnPlayerConnected()
     {
         level waittill("connected", player);
 		player iPrintLn("Custom XP made by eghapp");
-		//customgetRankXP();
 	}
 }
 
@@ -56,9 +52,9 @@ customgetRankXP()
 	return int(self.pers["xp"]);
 }
 
-giveXP(player, amount) 
+giveXP(amount) 
 {
-    playerfile = "scripts\\EgHap\\" + player.guid + ".txt";
+    playerfile = "scripts\\EgHap\\" + self.guid + ".txt";
     file = fopen(playerfile, "r");
     self.pers["oldxp"] = fread(file);
     fclose(file);
@@ -71,5 +67,5 @@ giveXP(player, amount)
 customgiveRankXP(type, value, weapon, sMeansOfDeath, challengeName) 
 {
     self endon("disconnect");
-    giveXP(self, 50);
+    self giveXP(50);
 }
