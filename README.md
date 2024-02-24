@@ -1,5 +1,5 @@
 # Custom-XP-IW5
-shitty custom xp script for IW5 Plutonium
+retarded server sided XP script for IW5 Plutonium
 don't spawn bot or it will crash
 
 need:
