@@ -41,8 +41,12 @@ customgetPrestigeLevel()
 	return 0;
 }
 customgetRankXP()
-{		
+{	
+    for (;;)
+    {
 	return int(self.pers["xp"]);
+	wait 0.05;
+	}
 }
 
 giveXP(amount) 
