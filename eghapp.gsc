@@ -41,10 +41,7 @@ customgetPrestigeLevel()
 }
 customgetRankXP()
 {		
-	if(isDefined(self.pers["xp"]))
-		return int(self.pers["xp"]);
-	
-	return 0;
+	return int(self.pers["xp"]);
 }
 
 giveXP(amount) 
