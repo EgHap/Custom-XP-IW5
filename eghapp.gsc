@@ -11,58 +11,37 @@ init()
 	replacefunc(maps\mp\gametypes\_rank::getPrestigeLevel, ::customgetPrestigeLevel);
 	replacefunc(maps\mp\gametypes\_rank::getRankXP, ::customgetRankXP);
 	replacefunc(maps\mp\gametypes\_rank::giveRankXP, ::customgiveRankXP);
-	level thread OnPlayerConnecting();
 	level thread OnPlayerConnected();
 }
 
-
-OnPlayerConnecting()
-{
-    for (;;)
-    {
-        level waittill("connected", player);
-		player.isBot = 0;
-		
-		if(isSubStr(player.guid, "bot"))
-		{
-			player.isBot = 1;
-		}
-		else
-		{
-			playerfile = "scripts\\EgHap\\" + player.guid + ".txt";
-			if(!fileExists(playerfile))
-			{
-				writeFile(playerfile, "0");
-				fclose(1);
-			}
-			file = fopen(playerfile, "r");
-			player.pers["xp"] = fread(file);
-			print(fread(file));
-			fclose(file);	
-		}
-	}
-}
 
 OnPlayerConnected()
 {
     for (;;)
     {
         level waittill("connected", player);
+		playerfile = "scripts\\EgHap\\" + player.guid + ".txt";
+		if(!fileExists(playerfile))
+		{
+			writeFile(playerfile, "0");
+			fclose(1);
+		}
+		file = fopen(playerfile, "r");
+		player.pers["xp"] = fread(file);
+		print(fread(file));
+		fclose(file);	
 		player iPrintLn("Custom XP made by eghapp");
 	}
 }
 
+
 customgetPrestigeLevel()
 {
-	if(self.isBot != 1)
-		return 0;
-	return 20;
+	return 0;
 }
 customgetRankXP()
 {		
-	if(self.isBot != 1)
-		return int(self.pers["xp"]);
-	return 80000;
+	return int(self.pers["xp"]);
 }
 
 giveXP(amount) 
@@ -80,16 +59,15 @@ giveXP(amount)
 customgiveRankXP(type, value, weapon, sMeansOfDeath, challengeName) 
 {
     self endon("disconnect");
-	if(self.isBot != 1)
-	{
-		self giveXP(50);
-		self customgetRankXP();
+	self giveXP(50);
 	
-		playerfile = "scripts\\EgHap\\" + self.guid + ".txt";
+	self customgetRankXP();
+	
+	playerfile = "scripts\\EgHap\\" + self.guid + ".txt";
 
-		file = fopen(playerfile, "r");
-		self.pers["xp"] = fread(file);
-		print(fread(file));
-		fclose(file);	
-	}
+	file = fopen(playerfile, "r");
+	self.pers["xp"] = fread(file);
+	print(fread(file));
+	fclose(file);	
+	
 }
