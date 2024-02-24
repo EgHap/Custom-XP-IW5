@@ -24,7 +24,7 @@ OnPlayerConnected()
 		if(!fileExists(playerfile))
 		{
 			writeFile(playerfile, "0");
-			fclose(1);
+			fclose(playerfile);
 		}
 		file = fopen(playerfile, "r");
 		player.pers["xp"] = fread(file);
@@ -41,7 +41,10 @@ customgetPrestigeLevel()
 }
 customgetRankXP()
 {		
-	return int(self.pers["xp"]);
+	if(isDefined(self.pers["xp"]))
+		return int(self.pers["xp"]);
+	
+	return 0;
 }
 
 giveXP(amount) 
