@@ -31,6 +31,7 @@ OnPlayerConnected()
 		print(fread(file));
 		fclose(file);	
 		player iPrintLn("Custom XP made by eghapp");
+		self customgetRankXP();
 	}
 }
 
