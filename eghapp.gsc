@@ -57,6 +57,8 @@ giveXP(amount)
     self.pers["xp"] = int(self.pers["oldxp"]) + int(amount);
     fremove(playerfile);
     writeFile(playerfile, str(self.pers["xp"]));
+	self thread maps\mp\gametypes\_rank::xpEventPopup( amount );
+
 }
 
 customgiveRankXP(type, value, weapon, sMeansOfDeath, challengeName) 
